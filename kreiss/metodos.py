@@ -17,6 +17,8 @@ def choose_solver(method):
         solver = euler
     elif method == 'eulerImproved':
         solver = eulerImproved
+    elif method == 'RK4':
+        solver = RK4
 
     return solver
 
@@ -69,6 +71,27 @@ def eulerImproved(f, k, a, b, y0):
 
         v_tilde = v + k*f(v, t)
         v += k*f((v+v_tilde)/2, t+k/2) 
+
+        v_values[i] = v
+
+    return time, v_values   
+
+
+def RK4(f, k, a, b, y0):
+
+    time = np.arange(a, b, k)
+    v_values = np.zeros(time.size)
+
+    v = y0
+    t = a
+    for i, t in enumerate(time):
+
+        q1 = f(v, t)
+        q2 = f(v + (k/2)*q1, t+(k/2))
+        q3 = f(v + (k/2)*q2, t+(k/2))
+        q4 = f(v + k*q3, t+k)
+
+        v += (k/6)*(q1 + 2*q2 + 2*q3 + q4) 
 
         v_values[i] = v
 
