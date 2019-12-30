@@ -147,3 +147,35 @@ def QtildeTest(f, k, a, b, y0, method='euler'):
     Q = num / denom
     
     return time, Q
+
+def plus(i, N):
+    if i < N-1:
+        return i+1
+    return 0
+
+def minus(i, N):
+    if i > 0:
+        return i-1
+    return N-1
+
+def Dpm_per(v, h):
+    
+    new_v = np.zeros_like(v)
+    
+    new_v[1:-1] = (v[2:] - 2*v[1:-1] + v[:-2])
+    new_v[0] = v[1] - 2*v[0] + v[-1]
+    new_v[-1] = v[0] - 2*v[-1] + v[-2]    
+
+    return (1/h**2) * new_v
+
+def D0_per(v, h):
+    
+    new_v = np.zeros_like(v)
+    
+    new_v[1:-1] = (v[2:] - v[:-2])
+    new_v[0] = v[1] - v[-1]
+    new_v[-1] = v[0] - v[-2]
+    return (1/2*h) * new_v
+
+def Q2_per(v, h):
+    return D0_per(v, h)
