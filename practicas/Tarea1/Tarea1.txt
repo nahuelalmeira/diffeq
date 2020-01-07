@@ -1,0 +1,24 @@
+
+El programa en este momento resuelve la ecuación:
+
+dx_1/dt = Omega * x_2
+dx_2/dt = -Omega * x_1
+
+en [0,10].
+
+Puede usar varios métodos Runge Kutta. 
+
+Tarea 1: Familiarícese con el código, cambie parámetros, número de pasos, grafique, etc.
+Tarea 2: Corra el código con euler y con rk4, grafique y compare.
+Tarea 3: Corra con dt, dt/2 y dt/4 y haga las restas y cocientes para determinar la precisión del método.
+Tarea 4: Vea que aunque euler es inestable (porque?) la solución converge cuando dt va a cero.
+Tarea 5: Resuelva el problema de una partícula en un campo central (potencial 1/r), (usando que la órbita es en 
+un plano para reducir el problema a 2D) en coordenadas cartesianas. Grafique órbitas acotadas 
+(elipses) y órbitas divergentes (parábolas) que sucede cuando los datos iniciales están cerca
+del punto donde las órbitas dejan de ser acotadas? Calcule paso a paso la energía de la partícula.
+Tarea 6: Resuelva el problema anterior en coordenadas (r,phi) con condiciones iniciales (r_0,vr_0,phi_0, vphi_0).
+Mantenga (r_0 fijo y phi_0=0, vphi_0 pequeño fijo y varíe vr_0 de modo de acercarse al punto donde las órbitas dejan de
+ser abiertas, estudie la función que da phi asintótico (grandes tiempos) en función de vr_0.
+
+ 
+Fecha de entrega: Jueves 14 de abril.
