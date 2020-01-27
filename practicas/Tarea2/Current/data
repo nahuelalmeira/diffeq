@@ -1,0 +1,109 @@
+#
+# data file for 1d-maxwell equation
+#
+#                                 Grid parameters
+#
+initial_time=0.0
+final_time=1000.0
+# number of steps at which pointwise data is saved
+data_steps=1000
+# number of steps between pointwise data savings (total_steps = data_steps x int_steps)
+int_steps=1000
+# number of pointwise output between two 1d outputs
+factor_1d_steps=1
+#
+start_grid=0
+final_grid=501
+#
+initial_x=0.0
+final_x=1.0
+#
+#                                 FUNCTION PARAMETERS
+#
+# MASS
+# Boundary condition, 1 is the correct, 0 gives dirichlet
+c=0.0
+#
+#  parameter prior to boundary factor with derivatives. (s=1 conserves L2 norm)
+s=0.
+#
+# Perturbation frequency (x 2.PI)
+Omega=0.50
+#
+# Carrier frequency (x 2.PI)
+omega=500.0
+#
+# Perturbation strength
+lambda=0.00
+#
+#  Boundaries conditions
+#  for SO R10=0, R11=1000000, for ADV R10=1000000, R11=0.
+#
+R10=2000.0
+R11=0.0
+#
+#  outgoing normals to fases, first digit = coord. second = value */
+#
+nx_10=-1.0
+#
+nx_11=1.0
+#
+#
+# dissipation parameter (default 100. for D8-4)
+#
+sigma=0.1
+#
+#      Initial data parameters
+#
+a0=0.0
+k_a_10=10.0
+shift_a0=0.0
+#
+c0=1.0
+k_c_10=0.0
+shift_c0=0.0
+#
+a1=0.0
+k_a_11=0.0
+shift_a1=0.0
+#
+c1=1.0
+k_c_11=0.0
+shift_c1=0.0
+#
+b0=0.0
+sigma_b0=5.0
+c0_1=5.0
+#
+b1=1.0
+sigma_b1=20.0
+c1_1=1.0
+#
+# vi=-1.0 moves the wave towards the origin.
+#
+v1=1.0
+#
+#
+#
+#   Ploting Parameters
+#
+plot_factor=1
+#
+#Host name (host.domain.name or IP):
+host_name=localhost
+#File name (Omega, omega, lambda)(Powers of)
+file_name=adv
+#
+#
+# points where we what to get values and region where they are averaged
+#
+x[0]=0.950
+# this should be a half the wave length of the carrier frequency omega.
+# for the current setting should be 1/omega
+dx[0]=0.001
+#
+x[1]=0.15
+dx[1]=0.001
+#
+x[2]=0.15
+dx[2]=0.001

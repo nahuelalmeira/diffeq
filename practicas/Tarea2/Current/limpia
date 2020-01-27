@@ -1,0 +1,7 @@
+
+find . -name '*%' -print -exec rm {} \;
+find . -name '*.log' -print -exec rm {} \;
+find . -name 'core' -print -exec rm {} \;
+find . -name 'textedit.*' -print -exec rm {} \;
+find . -name '*.aux' -print -exec rm {} \;
+find . -name '*.dvi' -print -exec rm {} \;

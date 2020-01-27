@@ -1,0 +1,37 @@
+		
+Tarea:
+
+
+El código evoluciona la ecuación de onda de segundo orden 1-D en término de sus modos
+derecha-izquierda. En este caso en S^1 (círculo unidad).
+
+1.- Familiarízese con el código, corra distintos datos iniciales. En principio tiene dos,
+un polinomio bastante suave que luego se continúa con una parte idénticamente cero (SIMPLE_BUMP)
+y otro que es también en base a polinomios pero aproxima un escalón, (SQUARED_BUMP).
+Ambos datos pueden ser seteados con variables en first_macro_1d.c si lo quieren graficar 
+(por ejemplo para usar otras opciones) 
+pueden definir BUMP_TEST. Use Runge Kutta de orden 4 para la integración temporal.
+
+Corra el código con T=10 (y luego T=100) que corresponden a 10 (100) períodos. 
+La solución exacta al tiempo final coincide con el dato inicial ya que la
+solución se mueve con velocidad 1 sin deformarse. Vea que sucede con las soluciones aproximadas. 
+Si desea ver la solución en forma dinámica instale el graficador pygraph de python. 
+Luego córralo con los archivos terminados en .pyg. Para los análisis basta graficar una salida aschi al tiempo
+requerido (los .dat).
+
+2.- Usando distintas diferencias finitas (de orden 2=D, 4=Q, 6 y 8, las mismas se setean al final de 
+first_smacro_1d.c) calcule las soluciones aproximadas y compare con la exacta al tiempo final (igual al dato inicial).
+Grafique todas las soluciones en una misma gráfica. Vea por cuanto debe integrar para que las soluciones 
+difieran cláramente (a ojo) en cada caso. Vea los casos de ambos datos iniciales.
+
+3.- Agregue disipación y vea como cambian las soluciones. La disipación va de acuerdo al orden de las diferencias finita,
+por ejemplo, si se usan diferencias de orden dos se debe usar una disipación de orden 4, etc.
+
+4.- Calcule la convergencia para los distintos casos computando tres soluciones con dx, dx/2 y dx/4. 
+Use las normas L2 y L_inf.
+
+5.- Use el SIMPLE_BUMP como envolvente de una onda de alta frecuencia, evolucione con las distintas 
+discretizaciones espaciales y vea cuales son las velocidades de propagación 
+de los paquetes en cada caso. Compare con la teoría. 
+
+

@@ -1,0 +1,56 @@
+This directory contains the code for solving a plane wave solution to Maxwell equations.
+The integration region is [0,1]
+The refraction index depends on time as well as space but the time dependence (Omega) is
+of a much lower frequency than the carrier frequency (omega).
+
+a(x,t) = 1 + lambda * bump(x) * cos(2 * \pi * Omega * t)
+
+The function bump(x) is defined in the inidat.c file, together with the initial data
+for the wave, which is taken to banish.
+
+The wave enters from the right and can scape on the left.
+The media is only varying in the region [0.25,0.75].
+
+The equations are: (a = 1/n)
+
+u_t = - a * u_x + (a_x + a_t/a)(u+v)/2
+
+v_t = + a * v_x + (-a_x + a_t/a)(u+v)/2
+
+the initial data is 0
+the boundary condition to the left (x=0) is u(0,t) = sin(2 * \pi* omega * t)
+
+
+
+
+Identification of which component of the vector of variables is given
+in first_macro.h. There you also specify several things, like the number
+of grid points, etc.
+
+Other parameters and initial boundary conditions are given in the file "data"
+
+
+To run it do:
+
+First create a subdirectory Current and install all files there, then create
+there a subdirectory Dump 
+
+then 
+
+make 
+
+and then 
+
+w2.exec
+
+The output is managed in the file adisco.c 
+
+The initial data is in inidat.c
+The wave equations in wave_eq_1d.c
+The main in wave_1d_main.c
+The i/o functions in adisco.c
+The derivatives are computed using the Q matrix as in Kreiss. This is
+implemented in deriv_1d.c. (for different Q's see the definition
+of DERIV first_macro.h) 
+
+
