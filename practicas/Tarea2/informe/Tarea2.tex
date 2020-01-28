@@ -9,6 +9,7 @@
 % These three packages are from the American Mathematical Society and includes all of the important symbols and operations 
 \usepackage{fullpage}
 % By default, an article has some vary large margins to fit the smaller page format.  This allows us to use more standard margins.
+\usepackage{graphicx}
 
 \setlength{\parskip}{1em}
 % This gives us a full line break when we write a new paragraph
@@ -16,6 +17,8 @@
 
 \begin{document}
 % Once we have all of our packages and setting announced, we need to begin our document.  You will notice that at the end of the writing there is an end document statements.  Many options use this begin and end syntax.
+
+\graphicspath{{figures/}}
 
 \begin{center}
     Tarea 2 \\
@@ -166,11 +169,11 @@ U(x, t=0) =
 
 A continuaci\'on utilizamos la teor\'ia de Fourier para hallar la soluci\'on exacta del problema
 
-\begin{align*}
-U_t &= v U_x,\quad x\in (0, 1), \quad t > 0 \\
+\begin{align} \label{eq:system}
+U_t &= v U_x,\quad x\in (0, 1), \quad t > 0 \nonumber \\
 U(x, t=0) &= f(x)\\
-U(0, t) &= U(1, t).
-\end{align*}
+U(0, t) &= U(1, t). \nonumber
+\end{align}
 
 El dato inicial $f(x)$ es tambi\'en 1-peri\'odico, es decir, $f(x+1) = f(x)$. Luego, podemos utilizar su expansi\'on en serie de Fourier
 
@@ -292,13 +295,130 @@ De acuerdo con \ref{eq:product_rule}, tenemos que
 &\simeq -h   \bigg[ U_j U_{j+1}\bigg]\bigg|_{N-1}^{N-1} = 0.
 \end{align}
 
+\section{M\'etodo de las l\'ineas}
+
+El m\'etodo de las l\'ineas consiste en resolver el problema \ref{eq:system} discretizando s\'olo las coordenadas espaciales, pero manteniendo el tiempo continuo, para transformar de ese modo el problema original en un sistema de ecuaciones diferenciales ordinarias, que pueden ser resueltas por m\'etodos est\'andar, como por ejemplo, m\'etodos Runge-Kutta.
+
+Sea $M$ un entero y $h = (2 M +1)^{-1}$ el ancho de grilla, que define los puntos $x_j = hj$, $j=0,\pm 1,\pm 2, \dots$. Aproximamos el problema \ref{eq:system} como
+
+\begin{align}
+U_t(x_j, t) &= v D_x^p U(x_j, t) \nonumber \\
+U(x_j, 0) &= f(x_j) \\
+U(x_0,t) &= U(x_{2M+1},t) \nonumber,
+\end{align}
+
+donde $D_x^p$ representa la aproximaci\'on de $\partial/\partial x$ a orden $p$.
+
+Proponemos una soluci\'on de tipo onda simple 
+
+\begin{align*}
+U(x_j,t) &= \hat{U}(\omega, t) e^{2\pi i \omega x_j} \\
+U(x_j, 0) &= \hat{f}(\omega).
+\end{align*}
+
+Reemplazando en la ecuaci\'on, tenemos
+
+\begin{equation}
+U_t(x_j, t) =  v\hat{U}(\omega, t) q(\omega) e^{2\pi i \omega x_j},
+\end{equation}
+
+donde $q(\omega)$ es el autovalor de $D_x^p$ correspondiente al autovector $e^{2\pi i \omega x_j}$ (tambi\'en llamado \emph{factor de amplificaci\'on}), es decir, 
+
+\begin{equation}
+D_x^p e^{2\pi i \omega x_j} = q(\omega) e^{2\pi i \omega x_j}.
+\end{equation}
+
+La soluci\'on queda entonces de la forma 
+
+\begin{equation}
+U(x_j,t) = \hat{f}(\omega) e^{2\pi i \omega x_j + v q(\omega) t}.
+\end{equation}
+
+Comparando con la soluci\'on exacta, vemos que esta soluci\'on aproximada corresponde a una onda plana que se desplaza a una velocidad 
+
+\begin{equation}
+\tilde{v}(\omega) = \dfrac{q(\omega)}{2\pi i\omega} v.
+\end{equation}
+
+Es decir, la velocidad de la soluci\'on aproximada depende expl\'icitamente de la frecuencia a trav\'es del factor de amplificaci\'on.
+
+La generalizaci\'on de la soluci\'on a cualquier dato peri\'odico $f(x)$ es 
+
+\begin{equation}
+U(x_j, t) = \sum_{\omega=-M}^M \hat{f}(\omega)  e^{2\pi i \omega x_j + v q(\omega) t},
+\end{equation}
+
+donde 
+
+\begin{equation}
+f(x) =  \sum_{\omega=-M}^M \hat{f}(\omega)  e^{2\pi i \omega x_j}.
+\end{equation}
+
+Luego, vemos que la soluci\'on se ir\'a deformando a medida que los distintos modos avancen cada uno con su correspondiente velocidad.
+
+Siguiendo la referencia \cite{Gustafsson}, podemos expresar los operadores de derivadas espaciales como 
+
+\begin{equation}
+D_x^p = D_0 \sum_{\nu=0}^{p/2-1} (-1)^{\nu} \alpha_{\nu} (h^2 D_+ D_-)^{\nu},
+\end{equation}
+
+donde 
+
+\begin{align*}
+\alpha_0 &= 1 \\
+\alpha_{\nu} &= \dfrac{\nu}{2(2\nu+1)} \alpha_{\nu-1}, \quad \nu = 1,2,\dots,p/2-1.
+\end{align*}
+
+En particular, los operadores utilizados en el c\'odigo corresponden a los \'ordenes $p=2, 4, 6, 8$. Los correspondientes factores de amplificaci\'on son
+
+\begin{align}
+q_2(\omega) &=i\dfrac{\sin (2\pi \omega h)}{h} \\
+q_4(\omega) &=i\dfrac{\sin (2\pi \omega h)}{h} \bigg[ 1 + \dfrac{2}{3} \sin^2(\pi \omega h) \bigg] \\
+q_6(\omega) &=i\dfrac{\sin (2\pi \omega h)}{h} \bigg[ 1 + \dfrac{2}{3} \sin^2(\pi \omega h) + \dfrac{8}{15}\sin^4(\pi \omega h) \bigg] \\
+q_8(\omega) &=i\dfrac{\sin (2\pi \omega h)}{h} \bigg[ 1 + \dfrac{2}{3} \sin^2(\pi \omega h) + \dfrac{8}{15}\sin^4(\pi \omega h) + \dfrac{16}{35} \sin^6(\pi \omega h) \bigg].
+\end{align}
+
+Como se puede ver en la figura \ref{fig:ampli}, todos los factores de amplificaci\'on se comportan bien para bajas frecuencias, pero inevitablemente fallan a frecuencias mayores. Cuanto mayor sea el orden de la aproximaci\'on, mayor es el rango de frecuencias para el cual $q \sim 1$. 
+
+\begin{figure}
+\center
+\includegraphics[scale=0.5]{amplification.png}
+\caption{Factor de amplificaci\'on en funci\'on de la frecuencia para distintos operadores de derivadas espaciales.} \label{fig:ampli}
+\end{figure}
+
 \section{Resultados num\'ericos}
 
+En la figura \ref{fig:simple} mostramos la evoluci\'on de las soluciones aproximadas en funci\'on del tiempo de integraci\'on para el dato inicial \textbf{simple bump}. Como la velocidad es la unidad, las soluciones deber\'ian coincidir con el dato inicial. Podemos ver que la soluci\'on correspondiente a $D_x^2$ comienza a diferenciarse para $T=10$ (ver inset). Las dem\'as aproximaciones se mantienen razonablemente buenas hasta tiempos largos ($T=1000$). 
 
+\begin{figure}
+\center
+\includegraphics[scale=0.3]{simple.png}
+\caption{Comparaci\'on entre las soluciones aproximadas y la soluci\'on anal\'itica para distintos tiempos, para el dato inicial \textbf{simple bump}. $N_x=501$, $\mathrm{CDF} = 0.501$.} \label{fig:simple}
+\end{figure}
+
+Para el dato inicial \textbf{square bump}, en cambio, la soluci\'on comienza a deformarse antes (figura \ref{fig:square}). Ya para $T=100$ es posible ver diferencias significativas en la aproximaci\'on $D_x^4$. Para $T=1000$, se ven diferencias en todas las aproximaciones.
+
+\begin{figure}
+\center
+\includegraphics[scale=0.3]{square.png}
+\caption{Comparaci\'on entre las soluciones aproximadas y la soluci\'on anal\'itica para distintos tiempos, para el dato inicial \textbf{square bump}. $N_x=501$, $\mathrm{CDF} = 0.501$.} \label{fig:square}
+\end{figure}
 
 \begin{thebibliography}{1}
 
 \bibitem{Kreiss-Ortiz} {\em Introduction to Numerical Methods for Time Dependent Differential Equations}, H. Kreiss and O. Ortiz, (2014).
+
+\bibitem{Gustafsson} {\em High Order Difference Methods for Time Dependent PDE}, B. Gustafsson, (2008).
+
+\section{Disipaci\'on}
+
+Para disminuir el error de disipaci\'on en altas frecuencias, una opci\'on es agregar un t\'ermino disipativo de orden superior. En este caso, la ecuaci\'on \ref{eq:system} se transforma en 
+
+\begin{equation}
+U_t = v D_x^p U + \sigma D_{xx}^{p+2} U, \quad \sigma > 0.
+\end{equation}
+
+El t\'ermino disipativo se encarga de matar los modos de alta frecuencia a tiempos largos, disminuyendo la deformaci\'on de la onda inicial.
 
 \end{thebibliography}
 
