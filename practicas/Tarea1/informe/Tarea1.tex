@@ -1,0 +1,94 @@
+\documentclass[12pt]{article}
+% We can write notes using the percent symbol!
+% The first line above is to announce we are beginning a document, an article in this case, and we want the default font size to be 12pt
+\usepackage[utf8]{inputenc}
+% This is a package to accept utf8 input.  I normally do not use it in my documents, but it was here by default in Overleaf.
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+% These three packages are from the American Mathematical Society and includes all of the important symbols and operations 
+\usepackage{fullpage}
+% By default, an article has some vary large margins to fit the smaller page format.  This allows us to use more standard margins.
+\usepackage{graphicx}
+
+\setlength{\parskip}{1em}
+% This gives us a full line break when we write a new paragraph
+
+
+\begin{document}
+% Once we have all of our packages and setting announced, we need to begin our document.  You will notice that at the end of the writing there is an end document statements.  Many options use this begin and end syntax.
+
+\graphicspath{{figures/}}
+
+\begin{center}
+    Tarea 2 \\
+    Nahuel Almeira
+\end{center}
+
+\begin{center}
+    \Large - \normalsize
+\end{center}
+
+\section{Ecuaci\'on}
+
+En esta pr\'actica resolveremos la ecuaci\'on del oscilador arm\'onico 
+
+\begin{align}
+\ddot{y} + \omega y &= 0 \\
+y(0) &= C \\
+\dot{y}(0) &= 0.
+\end{align}
+
+Para resolver la ecuaci\'on, realizamos el cambio de variables 
+
+\begin{align}
+y &= x_1 \\
+\dot{y} &= \omega x_2.
+\end{align}
+
+As\'i, obtenemos el sistema de ecuaciones 
+
+\begin{equation}
+\begin{pmatrix}
+\dot{x_1} \\
+\dot{x_2}
+\end{pmatrix} = 
+\begin{pmatrix}
+0 & \omega \\
+-\omega & 0
+\end{pmatrix}
+\begin{pmatrix}
+x_1 \\
+x_2,
+\end{pmatrix}
+\end{equation}
+
+que podemos escribir como 
+
+\begin{equation}
+\dot{x} = A x, \quad x \equiv (x_1, x_2)^T, \quad A \equiv 
+\begin{pmatrix}
+0 & \omega \\
+-\omega & 0
+\end{pmatrix}.
+\end{equation}
+
+
+La soluci\'on a la ecuaci\'on \ref{eq:oscilador} es 
+
+\begin{equation}
+y(t) = C \sin(\omega t).
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{thebibliography}{1}
+
+\bibitem{Kreiss-Ortiz} {\em Introduction to Numerical Methods for Time Dependent Differential Equations}, H. Kreiss and O. Ortiz, (2014).
+
+\bibitem{Gustafsson} {\em High Order Difference Methods for Time Dependent PDE}, B. Gustafsson, (2008).
+
+\end{thebibliography}
+
+
+\end{document}
